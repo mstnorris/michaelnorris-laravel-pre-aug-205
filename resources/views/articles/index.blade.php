@@ -52,7 +52,10 @@
             position: -webkit-sticky;
             position: sticky;
             top: 0;
-            background: rgba(255,255,255,.8);
+            background-image:
+            linear-gradient(
+                white 60%, rgba(255,255,255,0)
+            );
         }
 
         ul li {
