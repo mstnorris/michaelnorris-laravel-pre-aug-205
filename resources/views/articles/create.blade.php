@@ -3,19 +3,11 @@
 @section('header')
     <link rel="stylesheet" href="//cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
     <style>
-        body {
-            background: #eceff1;
-        }
-
-        h1.display-4 {
-            color: #607d8b;
-        }
-
         #MyID {
             border: none !important;
             background: none !important;
+            height: 100%;
         }
-
     </style>
 @endsection
 
@@ -24,7 +16,8 @@
         <div class="row">
             <div class="col-sm-10 col-sm-offset-1">
                 <h1 class="display-4">Create</h1>
-                <textarea name="" id="MyID" cols="30" rows="10"></textarea>
+                <textarea name="" id="MyID" cols="30" rows="20"></textarea>
+
             </div>
         </div>
     </div>

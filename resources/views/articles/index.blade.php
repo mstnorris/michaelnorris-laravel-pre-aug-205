@@ -10,6 +10,13 @@
             background: white;
             width: 100%;
             height: 100%;
+            margin: 0;
+        }
+
+        .article-background-pattern:before,
+        .article-background-pattern:after {
+            content: '';
+            display: table;
         }
 
         div.article-background-pattern {
@@ -24,21 +31,24 @@
             z-index: 100;
         }
 
+        .row {
+            margin: 0;
+            width: 100%;
+        }
+
         .card {
             background: white;
             padding: 0 1em;
             border-radius: 0;
             border: none;
-            /*box-shadow: 0 2px 5px rgba(55, 55, 55, .3);*/
-            min-height: 480px;
             margin: 0;
+            height:100%;
         }
 
         .card .card-block {
             border-radius: 0;
             border: none;
             padding: 0;
-            min-height: 480px;
             margin: 0;
         }
 
@@ -68,46 +78,73 @@
             background: none;
             border: none;
         }
+
+        p.card-footer.card-text {
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .label.label-pill.label-default {
+            border: 1px solid #607d8b;
+            background: none;
+            color: #607d8b;
+        }
+
     </style>
 @endsection
 
 @section('content')
 
     <div class="container-fluid">
-        @foreach ( $articles as $article )
 
-            <div class="row">
-                <article>
-                    <div class="article-background-pattern"
-                         style='background-image: {{ $article->header_image_path }}'></div>
-                    <div class="card">
-                        <div class="card-block">
+            @foreach ( $articles as $article )
 
-                            <h3 class="article-title">{{ $article->title }}</h3>
+                <div class="row">
+                    <article class="item">
+                        <div class="article-background-pattern"
+                             style='background-image: {{ $article->header_image_path }}'></div>
+                        <div class="card">
+                            <div class="card-block">
 
-                            <div class="article-body">
-                                {{ $article->body }}
+                                <h3 class="article-title">{{ $article->title }}</h3>
+
+                                <div class="article-body">
+                                    <p class="text-justify">{{ $article->body }}</p>
+                                </div>
                             </div>
+
+                            <p class="card-text card-footer">
+                                <small class="text-muted">
+                                    <i class="fa fa-fw fa-tags"></i>
+                                    @foreach ( $article->tags as $tag )
+                                        <a href="{{ route('individual_tag_path', $tag->id) }}"><span class="label label-pill label-default">{{ $tag->name }}</span></a>
+                                    @endforeach
+                                </small>
+                                <span class="pull-right"><small class="text-muted"><i
+                                        class="fa fa-fw fa-clock-o"></i> {{ $article->published_at->diffForHumans() }}
+                                </small></span>
+                            </p>
                         </div>
+                    </article>
 
-                        <p class="card-text card-footer text-right">
-                                    <small class="text-muted"><i
-                                                class="fa fa-fw fa-clock-o"></i> {{ $article->published_at->diffForHumans() }}
-                                        </small>
-                        </p>
-                    </div>
-                </article>
+                </div>
+            @endforeach
 
-            </div>
-        @endforeach
+        </div>
 
         <div class="row">
             {!! $articles->render() !!}
         </div>
 
-    </div>
-
 @endsection
+
+@section('footer')
+    <script src="/js/sticky.js"></script>
+    <script>
+        $('.article-background-patter').Stickyfill();
+    </script>
+@endsection
+
 
 @section('footer-old')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/0.12.10/vue.min.js"></script>
@@ -166,4 +203,5 @@
             }
         });
     </script>
+
 @endsection

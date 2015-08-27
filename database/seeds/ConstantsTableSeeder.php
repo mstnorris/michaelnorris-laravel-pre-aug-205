@@ -29,6 +29,8 @@ class ConstantsTableSeeder extends Seeder
 
         factory(App\Article::class, 50)->create();
 
+        factory(App\Tag::class, 20)->create();
+
 
     }
 }

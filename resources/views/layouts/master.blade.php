@@ -14,6 +14,7 @@
             position: relative;
             min-height: 100%;
             width: 100%;
+            margin: 0;
         }
 
         body {
@@ -24,18 +25,25 @@
             display: table;
             font-weight: 300;
             font-family: 'Open Sans', sans-serif;
+            height:100%;
+            background: #eceff1;
         }
 
-        .footer {
+        .container-fluid {
+            padding: 0;
+        }
+
+        footer {
             position: absolute;
             bottom: 0;
             width: 100%;
             height: 60px;
-
+            background: white;
         }
 
         .container-fluid .text-muted {
             margin: 20px 0;
+            padding: 0;
         }
     </style>
 
@@ -45,14 +53,7 @@
 <body>
 @yield('content')
 
-<footer class="footer">
-    <div class="container-fluid">
-        <div class="row">
-            <p class="text-muted text-center">Copyright &copy; {{ date('Y') }} Michael Norris. All rights reserved.</p>
-        </div>
-
-    </div>
-</footer>
+@include('layouts.partials._footer')
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>

@@ -16,4 +16,9 @@ class Article extends Model
     protected $dates = [
         'published_at'
     ];
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
 }

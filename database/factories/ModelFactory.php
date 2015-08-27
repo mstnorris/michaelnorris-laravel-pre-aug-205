@@ -23,7 +23,13 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 $factory->define(App\Article::class, function (Faker\Generator $faker) {
     return [
         'title' => $faker->sentence(),
-        'body' => $faker->realText(),
+        'body' => $faker->realText(5000,5),
         'published_at' => $faker->dateTimeThisMonth
+    ];
+});
+
+$factory->define(App\Tag::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->word()
     ];
 });

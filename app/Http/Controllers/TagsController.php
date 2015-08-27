@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Article;
+use App\Tag;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class ArticlesController extends Controller
+class TagsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +18,7 @@ class ArticlesController extends Controller
      */
     public function index()
     {
-        $articles = Article::with('tags')->latest('published_at')->simplePaginate(9);
-
-        return view('articles.index', compact('articles'));
+        //
     }
 
     /**
@@ -29,7 +28,7 @@ class ArticlesController extends Controller
      */
     public function create()
     {
-        return view('articles.create');
+        //
     }
 
     /**
@@ -51,7 +50,9 @@ class ArticlesController extends Controller
      */
     public function show($id)
     {
-        //
+        $articles = Article::with('tags')->has('tags')->paginate(9);
+
+        return view('articles.index', compact('articles'));
     }
 
     /**
