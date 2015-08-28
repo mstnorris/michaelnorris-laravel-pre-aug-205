@@ -3,21 +3,40 @@
 namespace App\Http\Controllers\API;
 
 use App\Article;
+use App\Transformers\ArticleTransformer;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 
-class ArticlesController extends Controller
+class ArticlesController extends APIController
 {
+
+    /*
+     * @var App\Transformers\ArticleTransformer
+     */
+    protected $articleTransformer;
+
+    function __construct(ArticleTransformer $articleTransformer)
+    {
+        $this->articleTransformer = $articleTransformer;
+    }
+
+
     /**
      * Display a listing of the resource.
      *
      * @return Response
      */
-    public function index()
+    public function index($tag = null)
     {
-        return Article::all()->take(5);
+        //$limit = (int)Input::get('limit') ?: 9;
+        //$articles = Article::paginate($limit);
+
+        $articles = Article::all();
+
+        return $this->respond([
+            'data' => $this->articleTransformer->transformCollection($articles->all())
+        ]);
     }
 
     /**
@@ -49,7 +68,16 @@ class ArticlesController extends Controller
      */
     public function show($id)
     {
-        //
+        $article = Article::whereArticleId($id)->first();
+
+        if ( ! $article )
+        {
+            return $this->respondNotFound('Article not found.');
+        }
+
+        return $this->respond([
+            'data' => $this->articleTransformer->transform($article)
+        ]);
     }
 
     /**

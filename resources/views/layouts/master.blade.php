@@ -62,7 +62,7 @@
     @yield('header')
 
 </head>
-<body>
+<body id="articles">
 @include('layouts.partials._navigation')
 
 @yield('content')

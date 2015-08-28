@@ -19,7 +19,7 @@ class CreateArticlesTable extends Migration
             $table->text('body');
             $table->text('header_image_path');
             $table->string('color');
-            $table->boolean('private')->default(false);
+            $table->boolean('is_private')->default(false);
             $table->timestamp('published_at');
             $table->timestamps();
         });

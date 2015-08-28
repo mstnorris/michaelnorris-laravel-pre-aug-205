@@ -107,35 +107,35 @@
 
     <div class="container-fluid">
 
-            @foreach ( $articles as $article )
+            {{--@foreach ( $articles as $article )--}}
 
-                <div class="row">
+                <div class="row" v-repeat="articles | filterBy search" debounce="500">
                     <article class="item">
                         <div class="article-background-pattern"
-                             style='background-image: {{ $article->header_image_path }}'></div>
+                             style='background-image: @{{ header_image_path }}'></div>
                         <div class="card">
                             <div class="card-block">
 
 
-                                <h3 class="article-title"><a href="{{ route('individual_article_path', $article->article_id) }}">{!! $article->private ? "<i class='fa fa-lock'></i>" : "" !!} {{ $article->title }}</a>
+                                <h3 class="article-title"><a href="@{{ article_id }}">@{{ title }}</a>
 
-                                <small class="pull-right text-fixed-width"><a href="{{ route('individual_article_path', $article->article_id) }}">{{ $article->article_id }}</a></small>
+                                <small class="pull-right text-fixed-width"><a href="@{{ article_id }}">@{{ article_id }}</a></small>
                                     </h3>
 
                                 <div class="article-body">
-                                    <p class="text-justify">{{ $article->body }}</p>
+                                    <p class="text-justify">@{{ body }}</p>
                                 </div>
                             </div>
 
                             <p class="card-text card-footer">
                                 <small class="text-muted">
                                     <i class="fa fa-fw fa-tags"></i>
-                                    @foreach ( $article->tags as $tag )
-                                        <a href="{{ route('individual_tag_path', $tag->name) }}"><span class="label label-pill label-default">{{ $tag->name }}</span></a>
-                                    @endforeach
+                                    {{--@foreach ( $article->tags as $tag )--}}
+                                        {{--<a href="{{ route('individual_tag_path', $tag->name) }}"><span class="label label-pill label-default">{{ $tag->name }}</span></a>--}}
+                                    {{--@endforeach--}}
                                 </small>
                                 <span class="pull-right"><small class="text-muted"><i
-                                        class="fa fa-fw fa-clock-o"></i> {{ $article->published_at->diffForHumans() }}
+                                        class="fa fa-fw fa-clock-o"></i> @{{ published_at }}
                                         {{--<script>moment("{{ $article->published_at }}", "YYYY-MM-DD H:i:s").fromNow();</script>--}}
                                 </small></span>
                             </p>
@@ -143,12 +143,12 @@
                     </article>
 
                 </div>
-            @endforeach
+            {{--@endforeach--}}
 
         </div>
 
         <div class="row">
-            {!! $articles->render() !!}
+            {{--{!! $articles->render() !!}--}}
         </div>
 
 @endsection
@@ -159,10 +159,6 @@
     <script>
         $('.article-background-patter').Stickyfill();
     </script>
-@endsection
-
-
-@section('footer-old')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/0.12.10/vue.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/0.1.14/vue-resource.min.js"></script>
     <script>
@@ -172,10 +168,13 @@
             el: '#articles',
 
             data: {
+                search: '',
                 newArticle: {
+                    article_id: '',
                     title: '',
                     body: '',
                     header_image_path: '',
+                    is_private: '',
                     published_at: ''
                 },
 
@@ -210,7 +209,7 @@
 
                     this.articles.push(article);
 
-                    this.newArticle = { title: '', body: '', header_image_path: '', published_at: '' };
+                    this.newArticle = { article_id: '', title: '', body: '', header_image_path: '', is_private: '', published_at: '' };
 
                     this.submitted = true;
 

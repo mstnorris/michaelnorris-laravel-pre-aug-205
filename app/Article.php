@@ -11,7 +11,7 @@ class Article extends Model
         'article_id',
         'title',
         'body',
-        'private',
+        'is_private',
         'published_at'
     ];
 
@@ -20,7 +20,7 @@ class Article extends Model
     ];
 
     protected $casts = [
-        'private' => 'boolean',
+        'is_private' => 'boolean',
     ];
 
     public function scopePublished($query)
@@ -30,12 +30,12 @@ class Article extends Model
 
     public function scopePrivate($query)
     {
-        $query->where('private', true);
+        $query->where('is_private', true);
     }
 
     public function scopePublic($query)
     {
-        $query->where('private', false);
+        $query->where('is_private', false);
     }
 
     public function tags()

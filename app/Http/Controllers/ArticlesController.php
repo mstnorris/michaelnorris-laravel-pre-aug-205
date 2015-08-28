@@ -22,15 +22,15 @@ class ArticlesController extends Controller
         {
             $articles = Article::with('tags')->whereHas('tags', function ($q) use ($tag) {
                 $q->where('name', 'like', $tag);
-            })->paginate(9);
+            })->get();
 
             return view('articles.index', compact('articles'));
         }
 
         if ( auth()->check() ) {
-            $articles = Article::published()->latest('published_at')->paginate(9);
+            $articles = Article::published()->latest('published_at')->get();
         } else {
-            $articles = Article::published()->public()->latest('published_at')->paginate(9);
+            $articles = Article::published()->public()->latest('published_at')->get();
         }
 
         return view('articles.index', compact('articles'));

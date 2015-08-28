@@ -25,7 +25,7 @@
             @endif
         </ul>
         <form class="form-inline navbar-form pull-right">
-            <input class="form-control input-search" type="text" placeholder="Search..." autofocus>
+            <input class="form-control input-search" type="text" placeholder="Search..." v-model="search" autofocus>
         </form>
     </nav>
 </div>
