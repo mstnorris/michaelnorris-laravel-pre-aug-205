@@ -55,11 +55,13 @@ class APIController extends Controller
      */
     public function respondWithPagination(LengthAwarePaginator $items, $data)
     {
+        $data['next_page'] = $items->nextPageUrl();
         $data = array_merge($data, [
             'paginator' => [
                 'total_count'  => $items->total(),
                 'total_pages'  => ceil($items->total() / $items->perPage()),
                 'current_page' => $items->currentPage(),
+                'next_page'    => $items->nextPageUrl(),
                 'limit'        => $items->perPage()
             ]
         ]);

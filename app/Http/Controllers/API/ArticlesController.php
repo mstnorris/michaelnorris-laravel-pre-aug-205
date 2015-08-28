@@ -32,7 +32,8 @@ class ArticlesController extends APIController
     {
         $limit = (int)Input::get('limit', 9);
         $limit > 15 ? $limit = 15 : null;
-        $articles = Article::paginate($limit);
+
+        $articles = Article::with('tags')->public()->published()->paginate($limit);
         //dd(get_class_methods($articles));
         return $this->respondWithPagination($articles, [
             'data'      => $this->articleTransformer->transformCollection($articles->all()),

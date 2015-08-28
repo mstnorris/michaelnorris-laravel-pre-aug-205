@@ -13,7 +13,7 @@ class ArticleTransformer extends Transformer
             'title' => $article['title'],
             'body' => $article['body'],
             'header_image_path' => $article['header_image_path'],
-            'private' => $article['is_private'],
+            'is_private' => $article['is_private'],
             'published' => $article['published_at']
         ];
     }
