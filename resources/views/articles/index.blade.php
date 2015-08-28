@@ -1,16 +1,17 @@
 @extends('layouts.master')
 
 @section('header')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
     <style>
-        h1.display-4 {
-            color: #607d8b;
-        }
-
         article {
             background: white;
             width: 100%;
             height: 100%;
             margin: 0;
+        }
+
+        .container-fluid {
+            padding: 0;
         }
 
         .article-background-pattern:before,
@@ -64,8 +65,14 @@
             top: 0;
             background-image:
             linear-gradient(
-                white 60%, rgba(255,255,255,0)
+                white 80%,
+                rgba(255,255,255,0)
             );
+        }
+        
+        .article-title a {
+            color: inherit;
+            text-decoration: none;
         }
 
         ul li {
@@ -90,6 +97,9 @@
             color: #607d8b;
         }
 
+        .text-fixed-width a {
+            font-family: "Source Code Pro", sans-serif monospace;
+        }
     </style>
 @endsection
 
@@ -106,7 +116,11 @@
                         <div class="card">
                             <div class="card-block">
 
-                                <h3 class="article-title">{{ $article->title }}</h3>
+
+                                <h3 class="article-title"><a href="{{ route('individual_article_path', $article->article_id) }}">{!! $article->private ? "<i class='fa fa-lock'></i>" : "" !!} {{ $article->title }}</a>
+
+                                <small class="pull-right text-fixed-width"><a href="{{ route('individual_article_path', $article->article_id) }}">{{ $article->article_id }}</a></small>
+                                    </h3>
 
                                 <div class="article-body">
                                     <p class="text-justify">{{ $article->body }}</p>
@@ -117,11 +131,12 @@
                                 <small class="text-muted">
                                     <i class="fa fa-fw fa-tags"></i>
                                     @foreach ( $article->tags as $tag )
-                                        <a href="{{ route('individual_tag_path', $tag->id) }}"><span class="label label-pill label-default">{{ $tag->name }}</span></a>
+                                        <a href="{{ route('individual_tag_path', $tag->name) }}"><span class="label label-pill label-default">{{ $tag->name }}</span></a>
                                     @endforeach
                                 </small>
                                 <span class="pull-right"><small class="text-muted"><i
                                         class="fa fa-fw fa-clock-o"></i> {{ $article->published_at->diffForHumans() }}
+                                        {{--<script>moment("{{ $article->published_at }}", "YYYY-MM-DD H:i:s").fromNow();</script>--}}
                                 </small></span>
                             </p>
                         </div>
@@ -139,6 +154,7 @@
 @endsection
 
 @section('footer')
+
     <script src="/js/sticky.js"></script>
     <script>
         $('.article-background-patter').Stickyfill();

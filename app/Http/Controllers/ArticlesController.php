@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Article;
+use App\Tag;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -15,9 +16,22 @@ class ArticlesController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index($tag = null)
     {
-        $articles = Article::with('tags')->latest('published_at')->simplePaginate(9);
+        if ( $tag )
+        {
+            $articles = Article::with('tags')->whereHas('tags', function ($q) use ($tag) {
+                $q->where('name', 'like', $tag);
+            })->paginate(9);
+
+            return view('articles.index', compact('articles'));
+        }
+
+        if ( auth()->check() ) {
+            $articles = Article::published()->latest('published_at')->paginate(9);
+        } else {
+            $articles = Article::published()->public()->latest('published_at')->paginate(9);
+        }
 
         return view('articles.index', compact('articles'));
     }
@@ -29,7 +43,10 @@ class ArticlesController extends Controller
      */
     public function create()
     {
-        return view('articles.create');
+
+        $tags = Tag::all('name', 'id');
+
+        return view('articles.create', compact('tags'));
     }
 
     /**
@@ -49,9 +66,11 @@ class ArticlesController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function show($id)
+    public function show($article_id)
     {
-        //
+        $article = Article::whereArticleId($article_id)->first();
+
+        return $article;
     }
 
     /**

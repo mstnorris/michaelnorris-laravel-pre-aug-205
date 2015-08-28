@@ -2,7 +2,11 @@
 
 @section('header')
     <link rel="stylesheet" href="//cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css">
     <style>
+        body {
+            border-top: 1em solid #607d8b;
+        }
         #MyID {
             border: none !important;
             background: none !important;
@@ -15,8 +19,18 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-10 col-sm-offset-1">
-                <h1 class="display-4">Create</h1>
-                <textarea name="" id="MyID" cols="30" rows="20"></textarea>
+                <h1 class="display-4">Write</h1>
+
+                <div class="form-group"><textarea name="" id="MyID" cols="30" rows="20"></textarea></div>
+
+                <div class="form-group"><label for="tags">Tags</label>
+                    <select name="tags[]" id="tags" multiple="multiple" class="form-control">
+                        @foreach ( $tags as $tag )
+                            <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                        @endforeach
+                    </select></div>
+
+                <button class="btn btn-primary btn-block">Add</button>
 
             </div>
         </div>
@@ -27,7 +41,9 @@
 
 @section('footer')
     <script src="//cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
     <script>
+        $('select').select2();
         var simplemde = new SimpleMDE({
             element: document.getElementById("MyID"),
             status: false,

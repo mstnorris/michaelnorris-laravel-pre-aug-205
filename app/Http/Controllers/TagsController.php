@@ -50,7 +50,9 @@ class TagsController extends Controller
      */
     public function show($id)
     {
-        $articles = Article::with('tags')->has('tags')->paginate(9);
+        $articles = Article::with(['tags' => function ($query) use ($id) {
+            $query->where('id', $id);
+        }])->paginate(9);
 
         return view('articles.index', compact('articles'));
     }
