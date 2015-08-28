@@ -3,7 +3,13 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Contracts\Pagination\Paginator;
 
+/**
+ * Class APIController
+ * @package App\Http\Controllers\API
+ */
 class APIController extends Controller
 {
 
@@ -42,6 +48,25 @@ class APIController extends Controller
         return response()->json($data, $this->getStatusCode(), $headers);
     }
 
+    /**
+     * @param LengthAwarePaginator $items
+     * @param $data
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function respondWithPagination(LengthAwarePaginator $items, $data)
+    {
+        $data = array_merge($data, [
+            'paginator' => [
+                'total_count'  => $items->total(),
+                'total_pages'  => ceil($items->total() / $items->perPage()),
+                'current_page' => $items->currentPage(),
+                'limit'        => $items->perPage()
+            ]
+        ]);
+
+        return $this->respond($data);
+    }
+
     public function respondWithError($message)
     {
         return response()->json([
@@ -51,5 +76,5 @@ class APIController extends Controller
             ]
         ]);
     }
-    
+
 }

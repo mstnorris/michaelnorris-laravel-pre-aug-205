@@ -109,7 +109,7 @@
 
             {{--@foreach ( $articles as $article )--}}
 
-                <div class="row" v-repeat="articles | filterBy search" debounce="500">
+                <div class="row" v-repeat="articles['data'] | filterBy search" debounce="500">
                     <article class="item">
                         <div class="article-background-pattern"
                              style='background-image: @{{ header_image_path }}'></div>

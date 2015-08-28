@@ -7,6 +7,7 @@ use App\Transformers\ArticleTransformer;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Input;
 
 class ArticlesController extends APIController
 {
@@ -29,13 +30,12 @@ class ArticlesController extends APIController
      */
     public function index($tag = null)
     {
-        //$limit = (int)Input::get('limit') ?: 9;
-        //$articles = Article::paginate($limit);
-
-        $articles = Article::all();
-
-        return $this->respond([
-            'data' => $this->articleTransformer->transformCollection($articles->all())
+        $limit = (int)Input::get('limit', 9);
+        $limit > 15 ? $limit = 15 : null;
+        $articles = Article::paginate($limit);
+        //dd(get_class_methods($articles));
+        return $this->respondWithPagination($articles, [
+            'data'      => $this->articleTransformer->transformCollection($articles->all()),
         ]);
     }
 
@@ -113,4 +113,6 @@ class ArticlesController extends APIController
     {
         //
     }
+
+
 }

@@ -23,7 +23,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 $factory->define(App\Article::class, function (Faker\Generator $faker) {
     return [
         'title' => $faker->sentence(),
-        'body' => $faker->realText(100,5),
+        'body' => $faker->realText(5000,5),
         'is_private' => $faker->boolean(20),
         'published_at' => $faker->dateTimeThisMonth
     ];

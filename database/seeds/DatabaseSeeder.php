@@ -12,6 +12,8 @@ class DatabaseSeeder extends Seeder
      */
     private $tables = array(
         'articles',
+        'article_tag',
+        'tags',
         'users'
     );
 
