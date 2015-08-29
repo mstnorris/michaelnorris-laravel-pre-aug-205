@@ -30,9 +30,6 @@
             height:100%;
         }
 
-        .container-fluid {
-        }
-
         .container-fluid .text-muted {
             margin: 20px 0;
             padding: 0;
@@ -50,12 +47,17 @@
             background: white;
         }
 
+        a.navbar-brand {
+            color: #607d8b !important;
+        }
+
         ul li.nav-item {
             margin: 0;
         }
 
         .form-control.input-search {
             border:none;
+            width: 100%;
         }
     </style>
 

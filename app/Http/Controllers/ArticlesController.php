@@ -30,7 +30,7 @@ class ArticlesController extends Controller
         $limit = (int)Input::get('limit', 9);
 
         $limit > 15 ? $limit = 15 : null;
-        
+
         if ( $tag )
         {
             $articles = Article::with('tags')->whereHas('tags', function ($q) use ($tag) {

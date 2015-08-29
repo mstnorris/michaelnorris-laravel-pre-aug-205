@@ -150,6 +150,7 @@ return [
         GrahamCampbell\Markdown\MarkdownServiceProvider::class,
         Vinkla\Hashids\HashidsServiceProvider::class,
         League\ColorExtractor\Laravel\ColorExtractorServiceProvider::class,
+        AlgoliaSearch\Laravel\AlgoliaServiceProvider::class
     ],
 
     /*

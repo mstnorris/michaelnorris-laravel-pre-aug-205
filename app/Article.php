@@ -2,11 +2,14 @@
 
 namespace App;
 
+use AlgoliaSearch\Laravel\AlgoliaEloquentTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model
 {
+    use AlgoliaEloquentTrait;
+
     protected $fillable = [
         'article_id',
         'title',
