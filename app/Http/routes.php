@@ -6,7 +6,9 @@ get('write', ['as' => 'write_article_path', 'uses' => 'ArticlesController@create
 
 
 
-Route::get('articles/tag/{tag?}', ['as' => 'individual_tag_path', 'uses' => 'ArticlesController@index']);
+//Route::get('articles/tag/{tag?}', ['as' => 'individual_tag_path', 'uses' => 'ArticlesController@index']);
+Route::get('tag/{name}', ['as' => 'individual_tag_path', 'uses' => 'ArticlesController@index']);
+
 Route::resource('articles', 'ArticlesController');
 
 Route::group(['prefix' => 'api', 'namespace' => 'API'], function()

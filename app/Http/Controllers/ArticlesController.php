@@ -4,13 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Article;
 use App\Tag;
+use App\Transformers\ArticleTransformer;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Input;
 
 class ArticlesController extends Controller
 {
+    protected $articleTransformer;
+
+    function __construct(ArticleTransformer $articleTransformer)
+    {
+        $this->articleTransformer = $articleTransformer;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -18,22 +27,22 @@ class ArticlesController extends Controller
      */
     public function index($tag = null)
     {
+        $limit = (int)Input::get('limit', 9);
+
+        $limit > 15 ? $limit = 15 : null;
+        
         if ( $tag )
         {
             $articles = Article::with('tags')->whereHas('tags', function ($q) use ($tag) {
                 $q->where('name', 'like', $tag);
-            })->get();
-
+            })->public()->published()->latest('published_at')->paginate($limit);
             return view('articles.index', compact('articles'));
         }
 
-        if ( auth()->check() ) {
-            $articles = Article::published()->latest('published_at')->get();
-        } else {
-            $articles = Article::published()->public()->latest('published_at')->get();
-        }
+        $articles = Article::with('tags')->public()->published()->latest('published_at')->paginate($limit);
 
         return view('articles.index', compact('articles'));
+
     }
 
     /**
@@ -68,9 +77,9 @@ class ArticlesController extends Controller
      */
     public function show($article_id)
     {
-        $article = Article::whereArticleId($article_id)->first();
+        $articles = Article::whereArticleId($article_id)->paginate(1);
 
-        return $article;
+        return view('articles.index', compact('articles'));
     }
 
     /**

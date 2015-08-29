@@ -35,7 +35,7 @@ class ConstantsTableSeeder extends Seeder
         $articleIds = Article::lists('id')->all();
         $tagIds = Tag::lists('id')->all();
 
-        foreach ( range ( 1, 30 ) as $index )
+        foreach ( range ( 1, 60 ) as $index )
         {
             DB::table('article_tag')->insert([
                 'article_id' => $faker->randomElement($articleIds),
