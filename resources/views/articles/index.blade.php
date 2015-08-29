@@ -101,8 +101,8 @@
 
         .results {
             position: relative;
-            top:0;
-            left:0;
+            top: 0;
+            left: 0;
             width: 100%;
             background: white;
             z-index: 100;
@@ -112,8 +112,8 @@
             border: 1px solid #eceff1;
             text-align: left;
             position: relative;
-            left:0;
-            top:0;
+            left: 0;
+            top: 0;
             width: 100vw;
             z-index: 50;
         }
@@ -127,6 +127,23 @@
         .tt-cursor {
             background: #eceff1;
         }
+
+        .search-input {
+            width: 100vw;
+            border: none;
+            padding: 6px 0 6px .5em;
+            font-size: 1.2em;
+            height: 54px;
+            line-height: 42px;
+        }
+
+        .search-input:focus {
+            outline-style: none;
+            outline-width: 0;
+            outline-color: 0;
+        }
+
+
     </style>
 @endsection
 
@@ -134,37 +151,25 @@
 
     <div class="container-fluid">
 
+        <input type="text" id="query" class="search-input" name="query" v-on="keyup: search | key 'enter'"
+               v-model="query" placeholder="Search..." autofocus>
+
         <div class="row">
+            <div class="results">
+                <ul>
+                    <li v-repeat="article: articles" class="item list-style-none">
+                        <h3 class="article-title"><a
+                                href="/@{{ article.article_id }}">@{{ article.title }}</a>
 
-                <div class="results">
-                    <article v-repeat="article: articles" class="item">
-                        <div class="article-background-pattern"
-                             style='background-image: @{{ article.header_image_path }}'></div>
+                            <small class="pull-right text-fixed-width"><span class="label label-pill label-default"><a
+                                        href="/@{{ article.article_id }}"><i
+                                            class="fa fa-fw fa-share-square-o"></i> @{{ article.article_id }}</a></span>
+                            </small>
+                        </h3>
 
-                        <div class="card">
-                            <div class="card-block">
-
-
-                                <h3 class="article-title"><a
-                                        href="/@{{ article.article_id }}">@{{ article.title }}</a>
-
-                                    <small class="pull-right text-fixed-width"><span class="label label-pill label-default"><a
-                                                href="/@{{ article.article_id }}">@{{ article.article_id }}</a></span>
-                                    </small>
-                                </h3>
-
-                                <div class="article-body">
-                                    <p class="text-justify">@{{ article.body }}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        {{--<p v-html="article._highlightResult.title.value"></p>--}}
-                        {{--<h4 v-html="article._highlightResult.published_at.value"></h4>--}}
-
-                    </article>
-                </div>
-
+                    </li>
+                </ul>
+            </div>
         </div>
 
 
@@ -225,6 +230,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/0.12.12/vue.min.js"></script>
     <script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.jquery.min.js"></script>
+    <script src="/js/jquery.hotkeys.js"></script>
     <script>
         new Vue({
             el: 'body',
@@ -242,17 +248,8 @@
                     .typeahead(null, {
                         source: this.index.ttAdapter(),
                         displayKey: 'title',
-//                        templates: {
-//                            suggestion: function (hit) {
-//                                return (
-//                                    '<div class="results">' +
-//                                    '<h3 class="title">' + hit._highlightResult.title.value + '</h3>' +
-//                                    '<h4 class="published_at">' + hit._highlightResult.published_at.value + '</h4>' +
-//                                    '</div>'
-//                                );
-//                            }
-//                        }
                     })
+                    .focus()
                     .on('typeahead:select', function (e, suggestion) {
                         this.query = suggestion.title;
                     }.bind(this));
@@ -269,4 +266,5 @@
             }
         });
     </script>
+
 @endsection

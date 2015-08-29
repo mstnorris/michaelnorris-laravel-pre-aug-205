@@ -4,9 +4,6 @@
     <link rel="stylesheet" href="//cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css">
     <style>
-        body {
-            border-top: 1em solid #607d8b;
-        }
         #MyID {
             border: none !important;
             background: none !important;

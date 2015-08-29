@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
 
         $this->cleanDatabase();
 
+        $this->call('UsersTableSeeder');
         $this->call('ConstantsTableSeeder');
 
         Model::reguard();

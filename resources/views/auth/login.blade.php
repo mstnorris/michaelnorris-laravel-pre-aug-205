@@ -1,10 +1,8 @@
-@extends('layouts.master')
+@extends('layouts.simple')
 
 @section('header')
     <style>
-        body {
-            border-top: 1em solid #607d8b;
-        }
+
     </style>
 @endsection
 
